@@ -11,7 +11,7 @@ var
   ch: techer;
   log: array of Byte;
   i, j: Byte;
-  n, m,t: Byte;
+  n, m, t: Byte;
   cnt: Byte;
 
 procedure incarr(var arr: techer; x, y: byte);
@@ -19,10 +19,12 @@ var
   i: Byte;
   n, m: Byte;
 begin
-n:=Length(arr)-1;
-m:=Length(arr[0])-1;
-for i:=0 to m do
-  arr[]
+  n := Length(arr) - 1;
+  m := Length(arr[0]) - 1;
+  for i := 0 to m do
+    inc(arr[x,i]);
+  for i := 0 to n do
+    inc(arr[i,y]);
 
 end;
 
@@ -31,7 +33,12 @@ var
   i: Byte;
   n, m: Byte;
 begin
-
+n := Length(arr) - 1;
+  m := Length(arr[0]) - 1;
+  for i := 0 to m do
+    dec(arr[x,i]);
+  for i := 0 to n do
+    dec(arr[i,y]);
 end;
 begin
   {Write('Enter the number of measurements: ');
@@ -44,7 +51,7 @@ begin
   begin
     t := m;
     m := n;
-    n :=t ;
+    n := t;
   end;
   SetLength(ch, n, m);
   SetLength(log, m);
@@ -56,4 +63,4 @@ begin
 
   Readln;
 end.
- 
+
