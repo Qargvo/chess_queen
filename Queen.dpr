@@ -16,29 +16,94 @@ var
 
 procedure incarr(var arr: techer; x, y: byte);
 var
-  i: Byte;
+  i, j: ShortInt;
   n, m: Byte;
 begin
   n := Length(arr) - 1;
   m := Length(arr[0]) - 1;
   for i := 0 to m do
-    inc(arr[x,i]);
+    inc(arr[x, i]);
   for i := 0 to n do
-    inc(arr[i,y]);
+    inc(arr[i, y]);
+  i := x;
+  j := y;
+  while (j >= 0) and (i >= 0) do
+  begin
+    inc(arr[i, j]);
+    Dec(i);
+    dec(j);
+  end;
+  i := x;
+  j := y;
+  while (j >= 0) and (i <= n) do
+  begin
+    inc(arr[i, j]);
+    inc(i);
+    Dec(j);
+  end;
+  i := x;
+  j := y;
+  while (j <= n) and (i >= 0) do
+  begin
+    inc(arr[i, j]);
+    Dec(i);
+    Inc(j);
+  end;
+  i := x;
+  j := y;
+  while (j <= n) and (i <= m) do
+  begin
+    inc(arr[i, j]);
+    inc(i);
+    Inc(j);
+  end;
 
 end;
 
 procedure decarr(var arr: techer; x, y: byte);
 var
-  i: Byte;
+  i, j: ShortInt;
   n, m: Byte;
 begin
-n := Length(arr) - 1;
+  n := Length(arr) - 1;
   m := Length(arr[0]) - 1;
   for i := 0 to m do
-    dec(arr[x,i]);
+    dec(arr[x, i]);
   for i := 0 to n do
-    dec(arr[i,y]);
+    dec(arr[i, y]);
+  i := x;
+  j := y;
+  while (j >= 0) and (i >= 0) do
+  begin
+    dec(arr[i, j]);
+    Dec(i);
+    dec(j);
+  end;
+  i := x;
+  j := y;
+  while (j >= 0) and (i <= n) do
+  begin
+    dec(arr[i, j]);
+    inc(i);
+    Dec(j);
+  end;
+  i := x;
+  j := y;
+  while (j <= n) and (i >= 0) do
+  begin
+    dec(arr[i, j]);
+    Dec(i);
+    Inc(j);
+  end;
+  i := x;
+  j := y;
+  while (j <= n) and (i <= m) do
+  begin
+    dec(arr[i, j]);
+    inc(i);
+    Inc(j);
+  end;
+
 end;
 begin
   {Write('Enter the number of measurements: ');
@@ -60,7 +125,7 @@ begin
   for i := 0 to n - 1 do
     for j := 0 to m - 1 do
       ch[i, j] := 0;
-
+  
   Readln;
 end.
 
