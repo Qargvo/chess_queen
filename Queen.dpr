@@ -43,7 +43,7 @@ begin
   end;
   i := x;
   j := y;
-  while (j <= n) and (i >= 0) do
+  while (j <= m) and (i >= 0) do
   begin
     inc(arr[i, j]);
     Dec(i);
@@ -51,7 +51,7 @@ begin
   end;
   i := x;
   j := y;
-  while (j <= n) and (i <= m) do
+  while (j <= m) and (i <= n) do
   begin
     inc(arr[i, j]);
     inc(i);
@@ -89,7 +89,7 @@ begin
   end;
   i := x;
   j := y;
-  while (j <= n) and (i >= 0) do
+  while (j <= m) and (i >= 0) do
   begin
     dec(arr[i, j]);
     Dec(i);
@@ -97,7 +97,7 @@ begin
   end;
   i := x;
   j := y;
-  while (j <= n) and (i <= m) do
+  while (j <= m) and (i <= n) do
   begin
     dec(arr[i, j]);
     inc(i);
