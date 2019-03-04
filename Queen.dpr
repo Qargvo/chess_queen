@@ -1,9 +1,10 @@
 program Queen;
 
 {$APPTYPE CONSOLE}
+{$WARNINGs OFF}
 
 uses
-  SysUtils;
+  Windows;
 
 type
   techer = array of array of byte;
@@ -12,8 +13,12 @@ var
   log: array of ShortInt;
   i, j: shortint;
   n, m, t: Byte;
-  cnt: Byte;
-
+  cnt: Cardinal;
+  tm, fr,t1,t2: Int64;
+{function time: int64;
+asm
+   rdtsc
+end;  }
 procedure incarr(var arr: techer; x, y: byte);
 var
   i, j: ShortInt;
@@ -106,7 +111,7 @@ begin
 
 end;
 
-procedure Write_Mas(const mas: techer);
+procedure Write_Mas(const mas: techer;fn: string = '');
 var
   i, j: cardinal;
 begin
@@ -119,7 +124,7 @@ begin
         write('+');
     Writeln;
   end;
-  writeln;
+
 end;
 begin
   {Write('Enter the number of measurements: ');
@@ -145,6 +150,9 @@ begin
         ch[i, j] := 0;
     i := 0;
     j := 0;
+    QueryPerformanceFrequency(fr);
+    QueryPerformancecounter(t1);
+    //tm := time;
     while j >= 0 do
     begin
       i := log[j];
@@ -170,12 +178,16 @@ begin
       begin
         Inc(cnt);
         dec(j);
-        Write_Mas(ch);
+        //Write_Mas(ch,'qwerty.txt');
+        //writeln;
         decarr(ch, log[j], j);
         Continue;
       end;
 
     end;
+    QueryPerformancecounter(t2);
+    //tm := time - tm;
+    writeln({' time = ', tm / fr: 0: 4, ' ms',}' Time2 = ',(t2-t1)*1000/fr:0:4,' ms');
     Writeln(cnt);
   end;
   Readln;
