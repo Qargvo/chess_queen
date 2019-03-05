@@ -13,97 +13,27 @@ var
   i, j: shortint;
   n, m, t: Byte;
   cnt: Byte;
-
-procedure incarr(var arr: techer; x, y: byte);
+  mc,mr,md,mu:array of Byte;
+procedure incarr(x, y: byte);
 var
   i, j: ShortInt;
   n, m: Byte;
 begin
-  n := Length(arr) - 1;
-  m := Length(arr[0]) - 1;
-  for i := 0 to m do
-    inc(arr[x, i]);
-  for i := 0 to n do
-    inc(arr[i, y]);
-  i := x;
-  j := y;
-  while (j >= 0) and (i >= 0) do
-  begin
-    inc(arr[i, j]);
-    Dec(i);
-    dec(j);
-  end;
-  i := x;
-  j := y;
-  while (j >= 0) and (i <= n) do
-  begin
-    inc(arr[i, j]);
-    inc(i);
-    Dec(j);
-  end;
-  i := x;
-  j := y;
-  while (j <= m) and (i >= 0) do
-  begin
-    inc(arr[i, j]);
-    Dec(i);
-    Inc(j);
-  end;
-  i := x;
-  j := y;
-  while (j <= m) and (i <= n) do
-  begin
-    inc(arr[i, j]);
-    inc(i);
-    Inc(j);
-  end;
-
+Inc(mc[y]);
+Inc(mr[x]);
+Inc(mu[m+(y-x)]);
+Inc(md[x+y]);
 end;
 
-procedure decarr(var arr: techer; x, y: byte);
+procedure decarr(x, y: byte);
 var
   i, j: ShortInt;
   n, m: Byte;
 begin
-  n := Length(arr) - 1;
-  m := Length(arr[0]) - 1;
-  for i := 0 to m do
-    dec(arr[x, i]);
-  for i := 0 to n do
-    dec(arr[i, y]);
-  i := x;
-  j := y;
-  while (j >= 0) and (i >= 0) do
-  begin
-    dec(arr[i, j]);
-    Dec(i);
-    dec(j);
-  end;
-  i := x;
-  j := y;
-  while (j >= 0) and (i <= n) do
-  begin
-    dec(arr[i, j]);
-    inc(i);
-    Dec(j);
-  end;
-  i := x;
-  j := y;
-  while (j <= m) and (i >= 0) do
-  begin
-    dec(arr[i, j]);
-    Dec(i);
-    Inc(j);
-  end;
-  i := x;
-  j := y;
-  while (j <= m) and (i <= n) do
-  begin
-    dec(arr[i, j]);
-    inc(i);
-    Inc(j);
-  end;
-
+dec(mc[y]);
+dec(mr[x]);
+dec(mu[m+(y-x)]);
+dec(md[x+y]);
 end;
 
 procedure Write_Mas(const mas: techer);
@@ -136,8 +66,22 @@ begin
       m := n;
       n := t;
     end;
-    SetLength(ch, n, m);
+
     SetLength(log, m);
+    SetLength(mc,m);
+    SetLength(mr,n);
+    SetLength(md,m+n-1);
+    SetLength(mu,m+n-1);
+    //initialization
+    for i := 0 to m - 1 do
+      mc[i]:=0;
+    for i := 0 to n - 1 do
+      mr[i] := 0;
+    for i :=0 to n + m - 1 do
+      begin
+        mu[i]:=0;
+        md[i]:=0;
+      end;
     for i := 0 to m - 1 do
       log[i] := -1;
     for i := 0 to n - 1 do
@@ -155,15 +99,15 @@ begin
           Break;
         log[j] := -1;
         Dec(j);
-        decarr(ch, log[j], j);
+        decarr(log[j], j);
         Continue;
       end;
-      if ch[i, j] <> 0 then
+      if mr[i]+mc[j]+mu[4+(j-i)]+md[i+j] <> 0 then
       begin
         log[j] := i;
         Continue;
       end;
-      incarr(ch, i, j);
+      incarr(i, j);
       log[j] := i;
       Inc(j);
       if j = m then
@@ -171,7 +115,7 @@ begin
         Inc(cnt);
         dec(j);
         Write_Mas(ch);
-        decarr(ch, log[j], j);
+        decarr(log[j], j);
         Continue;
       end;
 
