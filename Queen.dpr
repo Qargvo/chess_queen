@@ -3,7 +3,7 @@ program Queen;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils;
+  Windows;
 
 type
   techer = array of array of byte;
@@ -12,12 +12,12 @@ var
   log: array of ShortInt;
   i, j: shortint;
   n, m, t: Byte;
-  cnt: Byte;
+  cnt: cardinal;
   mc,mr,md,mu:array of Byte;
+  fr,t1,t2: Int64;
 procedure incarr(x, y: byte);
 var
   i, j: ShortInt;
-  n, m: Byte;
 begin
 Inc(mc[y]);
 Inc(mr[x]);
@@ -28,7 +28,6 @@ end;
 procedure decarr(x, y: byte);
 var
   i, j: ShortInt;
-  n, m: Byte;
 begin
 dec(mc[y]);
 dec(mr[x]);
@@ -77,18 +76,17 @@ begin
       mc[i]:=0;
     for i := 0 to n - 1 do
       mr[i] := 0;
-    for i :=0 to n + m - 1 do
+    for i :=0 to n + m - 2 do
       begin
         mu[i]:=0;
         md[i]:=0;
       end;
     for i := 0 to m - 1 do
       log[i] := -1;
-    for i := 0 to n - 1 do
-      for j := 0 to m - 1 do
-        ch[i, j] := 0;
     i := 0;
     j := 0;
+    QueryPerformanceFrequency(fr);
+    QueryPerformancecounter(t1);
     while j >= 0 do
     begin
       i := log[j];
@@ -102,7 +100,7 @@ begin
         decarr(log[j], j);
         Continue;
       end;
-      if mr[i]+mc[j]+mu[4+(j-i)]+md[i+j] <> 0 then
+      if mr[i]+mc[j]+mu[m+(j-i)]+md[i+j] <> 0 then
       begin
         log[j] := i;
         Continue;
@@ -114,12 +112,13 @@ begin
       begin
         Inc(cnt);
         dec(j);
-        Write_Mas(ch);
         decarr(log[j], j);
         Continue;
       end;
 
     end;
+    QueryPerformancecounter(t2);
+    writeln(' Time2 = ',(t2-t1)*1000/fr:0:4,' ms');
     Writeln(cnt);
   end;
   Readln;
